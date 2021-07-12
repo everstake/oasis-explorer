@@ -11,7 +11,7 @@ SELECT
     anyLastState(acb_escrow_balance_share) acb_escrow_balance_share,
     anyLastState(acb_escrow_debonding_active) acb_escrow_debonding_active,
     anyLastState(acb_delegations_balance) acb_delegations_balance,
-    anyLastState(acb_escrow_debonding_delegations_balance) acb_escrow_debonding_delegations_balance
+    anyLastState(acb_debonding_delegations_balance) acb_debonding_delegations_balance
 FROM account_balance
 GROUP BY acb_account;
 
@@ -27,7 +27,7 @@ SELECT
     anyLastMerge(acb_escrow_balance_share) acb_escrow_balance_share,
     anyLastMerge(acb_escrow_debonding_active) acb_escrow_debonding_active,
     anyLastMerge(acb_delegations_balance) acb_delegations_balance,
-    anyLastMerge(acb_escrow_debonding_delegations_balance) acb_escrow_debonding_delegations_balance
+    anyLastMerge(acb_debonding_delegations_balance) acb_debonding_delegations_balance
 FROM account_balance_merge_mv
 GROUP BY acb_account;
 

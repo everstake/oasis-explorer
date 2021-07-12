@@ -45,8 +45,8 @@ func (cl Clickhouse) CreateAccountBalances(balances []dmodels.AccountBalance) (e
 		return err
 	}
 	stmt, err := tx.Prepare(
-		fmt.Sprintf("INSERT INTO %s (blk_lvl, blk_time, acb_account, acb_nonce, acb_general_balance, acb_escrow_balance_active, acb_escrow_balance_share, acb_escrow_debonding_active, acb_escrow_debonding_share, acb_delegations_balance, acb_escrow_debonding_delegations_balance)"+
-			"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", dmodels.AccountBalanceTable))
+		fmt.Sprintf("INSERT INTO %s (blk_lvl, blk_time, acb_account, acb_nonce, acb_general_balance, acb_escrow_balance_active, acb_escrow_balance_share, acb_escrow_debonding_active, acb_escrow_debonding_share, acb_delegations_balance, acb_debonding_delegations_balance, acb_self_delegation_balance , acb_commission_schedule)"+
+			"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", dmodels.AccountBalanceTable))
 	if err != nil {
 		return err
 	}
@@ -71,6 +71,8 @@ func (cl Clickhouse) CreateAccountBalances(balances []dmodels.AccountBalance) (e
 			balances[i].EscrowDebondingShare,
 			balances[i].DelegationsBalance,
 			balances[i].DebondingDelegationsBalance,
+			balances[i].SelfDelegationBalance,
+			balances[i].CommissionSchedule,
 		)
 
 		if err != nil {
@@ -107,7 +109,7 @@ func (cl Clickhouse) GetTopEscrowAccounts(limit uint64) (resp []dmodels.AccountB
 	for rows.Next() {
 		var row dmodels.AccountBalance
 
-		err := rows.Scan(&row.Account, &row.Time, &row.Nonce, &row.GeneralBalance, &row.EscrowBalanceActive, &row.EscrowBalanceShare, &row.EscrowDebondingActive, &row.DelegationsBalance, &row.DebondingDelegationsBalance, &row.AccountName)
+		err := rows.Scan(&row.Account, &row.Time, &row.Nonce, &row.GeneralBalance, &row.EscrowBalanceActive, &row.EscrowBalanceShare, &row.EscrowDebondingActive, &row.DelegationsBalance, &row.DebondingDelegationsBalance, &row.CommissionSchedule, &row.AccountName)
 		if err != nil {
 			return resp, err
 		}

@@ -22,8 +22,6 @@ type BalanceChartData struct {
 	EscrowBalance               uint64    `db:"escrow_balance_active"`
 	DebondingBalance            uint64    `db:"escrow_debonding_active"`
 	DelegationsBalance          uint64    `db:"acb_delegations_balance"`
-	DebondingDelegationsBalance uint64    `db:"acb_escrow_debonding_delegations_balance"`
-
-	//Not implemented yet
-	SelfStakeBalance uint64 `json:"self_stake_balance"`
+	DebondingDelegationsBalance uint64    `db:"acb_debonding_delegations_balance"`
+	SelfStakeBalance            uint64    `json:"self_stake_balance"`
 }

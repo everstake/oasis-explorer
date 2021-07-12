@@ -597,12 +597,18 @@ func (p *ParserTask) getAccountBalance(height int64, address stakingAPI.Address)
 	})
 
 	var delegationsBalance uint64
-	for _, delegation := range delegations {
+	var selfDelegationBalance uint64
+
+	for delegator, delegation := range delegations {
 
 		stakeBalance, err := delegation.Pool.StakeForShares(&delegation.Shares)
 		if err != nil {
 			log.Error("Somehow delegations rpc values is wrong", zap.Error(err))
 			continue
+		}
+
+		if delegator.Equal(address) {
+			selfDelegationBalance += stakeBalance.ToBigInt().Uint64()
 		}
 
 		delegationsBalance += stakeBalance.ToBigInt().Uint64()
@@ -627,22 +633,26 @@ func (p *ParserTask) getAccountBalance(height int64, address stakingAPI.Address)
 		}
 	}
 
-	//TODO handle selfstake
-
 	return dmodels.AccountBalance{
 		Account:        address.String(),
 		Height:         height,
 		Nonce:          accInfo.General.Nonce,
 		GeneralBalance: accInfo.General.Balance.ToBigInt().Uint64(),
 
+		//Income delegations
 		EscrowBalanceActive: accInfo.Escrow.Active.Balance.ToBigInt().Uint64(),
 		EscrowBalanceShare:  accInfo.Escrow.Active.TotalShares.ToBigInt().Uint64(),
 
 		EscrowDebondingActive: accInfo.Escrow.Debonding.Balance.ToBigInt().Uint64(),
 		EscrowDebondingShare:  accInfo.Escrow.Debonding.TotalShares.ToBigInt().Uint64(),
 
+		//Outcome delegations
 		DelegationsBalance:          delegationsBalance,
 		DebondingDelegationsBalance: debondingDelegationsBalance,
+
+		SelfDelegationBalance: selfDelegationBalance,
+
+		CommissionSchedule: dmodels.CommissionSchedule{CommissionSchedule: accInfo.Escrow.CommissionSchedule},
 	}, nil
 }
 

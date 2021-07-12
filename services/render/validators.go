@@ -20,7 +20,6 @@ func Validator(a dmodels.ValidatorView) smodels.Validator {
 		Account:                     a.EntityID,
 		AccountName:                 a.Name,
 		NodeID:                      a.NodeAddress,
-		Fee:                         a.Fee,
 		GeneralBalance:              a.GeneralBalance,
 		EscrowBalance:               a.EscrowBalance,
 		EscrowBalanceShare:          a.EscrowBalanceShare,
@@ -37,6 +36,7 @@ func Validator(a dmodels.ValidatorView) smodels.Validator {
 			BlocksCount:     a.ProposedBlocksCount,
 			SignaturesCount: a.SignaturesCount,
 		},
+		CommissionSchedule: a.CommissionSchedule.CommissionSchedule,
 	}
 }
 

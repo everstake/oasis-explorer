@@ -82,7 +82,6 @@ CREATE TABLE IF NOT EXISTS public_validators
   reg_entity_id FixedString(44),
   reg_entity_address FixedString(46),
   pvl_name      String,
-  pvl_fee       Float64,
   pvl_info   String
 ) ENGINE ReplacingMergeTree()
     PARTITION BY reg_entity_id
@@ -138,7 +137,7 @@ from (
                     from register_node_transactions
                     group by reg_entity_address ) val_lvl USING reg_entity_address) validator
               ANY
-              LEFT JOIN (SELECT acb_account reg_entity_address, acb_escrow_balance_active, acb_general_balance, acb_escrow_balance_share, acb_escrow_debonding_active, acb_delegations_balance , acb_escrow_debonding_delegations_balance , depositors_num
+              LEFT JOIN (SELECT acb_account reg_entity_address, acb_escrow_balance_active, acb_general_balance, acb_escrow_balance_share, acb_escrow_debonding_active, acb_delegations_balance , acb_debonding_delegations_balance , acb_self_delegation_balance, acb_commission_schedule , depositors_num
                          from account_last_balance_view ANY
                                 LEFT JOIN entity_active_depositors_counter_view USING reg_entity_address
          ) b USING reg_entity_address

@@ -60,7 +60,7 @@ func (cl Clickhouse) GetBalanceChartData(accountID string, params smodels.ChartP
 	for rows.Next() {
 		row := dmodels.BalanceChartData{}
 
-		err := rows.Scan(&row.AccountID, &row.BeginOfPeriod, &row.GeneralBalance, &row.EscrowBalance, &row.DebondingBalance, &row.DelegationsBalance, &row.DebondingDelegationsBalance)
+		err := rows.Scan(&row.AccountID, &row.BeginOfPeriod, &row.GeneralBalance, &row.EscrowBalance, &row.DebondingBalance, &row.DelegationsBalance, &row.DebondingDelegationsBalance, &row.SelfStakeBalance)
 		if err != nil {
 			return resp, err
 		}

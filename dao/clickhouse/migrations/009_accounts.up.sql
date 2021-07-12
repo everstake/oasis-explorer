@@ -35,7 +35,7 @@ FROM account_operations_amount_mv
 GROUP BY acb_account;
 
 CREATE VIEW IF NOT EXISTS account_list_view AS
-select acb_account, created_at, operations_amount, acb_nonce operations_number, acb_general_balance general_balance, acb_escrow_balance_active escrow_balance, acb_escrow_balance_share escrow_balance_share, acb_delegations_balance  delegations_balance, acb_escrow_debonding_delegations_balance debonding_delegations_balance, tx_receiver delegate, entity.blk_lvl entity, prp.blk_lvl node from (
+select acb_account, created_at, operations_amount, acb_nonce operations_number, acb_general_balance general_balance, acb_escrow_balance_active escrow_balance, acb_escrow_balance_share escrow_balance_share, acb_delegations_balance  delegations_balance, acb_debonding_delegations_balance debonding_delegations_balance, acb_self_delegation_balance self_delegation_balance, tx_receiver delegate, entity.blk_lvl entity, prp.blk_lvl node from (
 select *
 from (select *
       --All accounts list with

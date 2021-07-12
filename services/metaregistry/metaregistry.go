@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"oasisTracker/dmodels"
+	"oasisTracker/smodels"
+
 	registry "github.com/oasisprotocol/metadata-registry-tools"
 	epochAPI "github.com/oasisprotocol/oasis-core/go/beacon/api"
 	"github.com/oasisprotocol/oasis-core/go/common/crypto/signature"
 	stakingAPI "github.com/oasisprotocol/oasis-core/go/staking/api"
-	"oasisTracker/dmodels"
-	"oasisTracker/smodels"
 )
 
 type Repo interface {
@@ -59,12 +60,6 @@ func UpdatePublicValidators(unit Repo, provider AccountProvider) error {
 
 		//Update validator info
 		updatedValidator, err := validatorUpdate(pubKey, validatorsMap, metadata)
-		if err != nil {
-			return err
-		}
-
-		//Update validator fee
-		updatedValidator.Fee, err = getValidatorFee(pubKey, provider, unit)
 		if err != nil {
 			return err
 		}

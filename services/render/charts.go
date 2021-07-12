@@ -44,7 +44,6 @@ func BalanceChartElement(bcd dmodels.BalanceChartData) smodels.BalanceChartData 
 		DebondingBalance:            bcd.DebondingBalance,
 		DelegationsBalance:          bcd.DelegationsBalance,
 		DebondingDelegationsBalance: bcd.DebondingDelegationsBalance,
-		//TODO add selfstake balance
-		SelfStakeBalance: 0,
+		SelfStakeBalance:            bcd.SelfStakeBalance,
 	}
 }

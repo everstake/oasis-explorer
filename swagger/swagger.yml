@@ -862,6 +862,8 @@ definitions:
         type: integer
       media_info:
         $ref: '#/definitions/ValidatorMegiaInfo'
+      commission_schedule:
+        $ref: '#/definitions/ValidatorCommissionSchedule'
       available_score:
         format: int64
         type: integer
@@ -888,6 +890,30 @@ definitions:
       - status
       - escrow_balance
     type: object
+  ValidatorCommissionSchedule:
+    properties:
+      rates:
+        items:
+          type: object
+          properties:
+            start:
+              format: int64
+              type: integer
+            rate_min:
+              type: string
+            rate_max:
+              type: string
+        type: array
+      bounds:
+        items:
+          type: object
+          properties:
+            start:
+              format: int64
+              type: integer
+            rate:
+              type: string
+        type: array
   ValidatorMegiaInfo:
     properties:
       website_link:
